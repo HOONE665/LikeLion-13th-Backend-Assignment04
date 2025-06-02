@@ -1,4 +1,13 @@
 package com.likelion.likelionassignmentcrud.restaurant.api.dto.request;
 
-public class RestaurantUpdateRequestDto {
+
+import lombok.Builder;
+
+@Builder
+public record RestaurantUpdateRequestDto(
+
+        String name,
+        String location,
+        String address
+) {
 }

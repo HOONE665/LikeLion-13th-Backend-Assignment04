@@ -36,4 +36,6 @@ public class RestaurantController {
         RestaurantInfoResponseDto restaurantInfoResponseDto = restaurantService.restaurantFindOne(restaurantId);
         return new ResponseEntity<>(restaurantInfoResponseDto, HttpStatus.OK);
     }
+
+
 }

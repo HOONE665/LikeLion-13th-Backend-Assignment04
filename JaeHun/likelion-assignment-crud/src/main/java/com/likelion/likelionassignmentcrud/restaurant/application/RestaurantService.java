@@ -1,6 +1,7 @@
 package com.likelion.likelionassignmentcrud.restaurant.application;
 
 import com.likelion.likelionassignmentcrud.restaurant.api.dto.request.RestaurantSaveRequestDto;
+import com.likelion.likelionassignmentcrud.restaurant.api.dto.request.RestaurantUpdateRequestDto;
 import com.likelion.likelionassignmentcrud.restaurant.api.dto.response.RestaurantInfoResponseDto;
 import com.likelion.likelionassignmentcrud.restaurant.api.dto.response.RestaurantListResponseDto;
 import com.likelion.likelionassignmentcrud.restaurant.domain.Restaurant;
@@ -40,5 +41,23 @@ public class RestaurantService {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(IllegalArgumentException::new);
         return RestaurantInfoResponseDto.from(restaurant);
+
+
     }
+
+    public void restaurantUpdate(Long id, RestaurantUpdateRequestDto dto) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("식당이 존재하지 않습니다."));
+
+        restaurant.update(dto.name(), dto.location());
+    }
+
+    @Transactional
+    public void restaurantDelete(Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다."));
+
+        restaurantRepository.delete(restaurant);
+    }
+
 }
