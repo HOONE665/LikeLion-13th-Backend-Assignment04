@@ -32,6 +32,7 @@ public class Restaurant {
     public void update(String name, String location) {
         this.name = name;
         this.location = location;
+        this.address = address;
     }
 
 }
