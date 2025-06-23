@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 
 public record RestaurantSaveRequestDto(
 
-
         @NotBlank(message = "비워둘 수 없습니다.")
         @Size(min = 1, max = 50, message = "50자 이하로 입력해주세요.")
         @NotNull(message = "필수로 입력해야합니다")

@@ -31,4 +31,15 @@ public class Menu {
         this.price = price;
         this.restaurant = restaurant;
     }
+
+    // 메뉴 정보 업데이트 메서드
+    public void update(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    // 연관된 식당 업데이트 메서드 (메뉴의 식당 변경 시 사용)
+    public void updateRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 }

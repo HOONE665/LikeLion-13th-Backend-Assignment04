@@ -17,15 +17,19 @@ public class ApiResTemplate<T> {
     private T data; // 응답데이터
 
     //데이터없는성공
-    public static ApiResTemplate successWithNoContent(SuccessCode successCode) {
+    public static ApiResTemplate<Void> successWithNoContent(SuccessCode successCode) {
         return new ApiResTemplate<>(successCode.getHttpStatusCode(),successCode.getMessage());
     }
     //데이터있는성공
-    public static <T> ApiResTemplate<T> successResponse(SuccessCode successCode, T data)  {
+    public static <T> ApiResTemplate<T> successResponse(SuccessCode successCode, T data) {
         return new ApiResTemplate<>(successCode.getHttpStatusCode(), successCode.getMessage(), data);
     }
     //ERROR
-    public static ApiResTemplate errorResponse(ErrorCode errorCode, String customMessage) {
-        return new ApiResTemplate<>(errorCode.getHttpStatusCode(), customMessage);
+    public static <T> ApiResTemplate<T> errorResponse(ErrorCode errorCode, String customMessage) {
+        return new ApiResTemplate<>(errorCode.getHttpStatusCode(), customMessage, null);
+    }
+
+    public static ApiResTemplate<Void> errorResponse(ErrorCode errorCode) {
+        return new ApiResTemplate<>(errorCode.getHttpStatusCode(), errorCode.getMessage(), null);
     }
 }

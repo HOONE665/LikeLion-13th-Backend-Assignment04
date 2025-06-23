@@ -26,7 +26,7 @@ public class CustomExceptionAdvice {
     // 원인 모를 이유의 예외 발생 시
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ApiResTemplate handleServerException(final Exception e) {
+    public ApiResTemplate<Void> handleServerException(final Exception e) {
         log.error("Internal Server Error: {}", e.getMessage(), e);
         return ApiResTemplate.errorResponse(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
     }
@@ -36,13 +36,13 @@ public class CustomExceptionAdvice {
      */
     // 내부 커스텀 에러 처리하기
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ApiResTemplate> handleCustomException(BusinessException e) {
+    public ResponseEntity<ApiResTemplate<Void>> handleCustomException(BusinessException e) {
         log.error("CustomException: {}", e.getMessage(), e);
 
-        ApiResTemplate<?> body = ApiResTemplate.errorResponse(e.getErrorCode(), e.getMessage());
+        ApiResTemplate<Void> body = ApiResTemplate.errorResponse(e.getErrorCode(), e.getCustomMessage());
 
         return ResponseEntity
-                .status(e.getErrorCode().getHttpStatus()) // 에러코드에 정의된 상태 코드 사용
+                .status(e.getErrorCode().getHttpStatus())
                 .body(body);
     }
 
@@ -62,12 +62,13 @@ public class CustomExceptionAdvice {
     }
 
     private String convertMapToString(Map<String, String> map) {
+        if (map.isEmpty()) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             sb.append(entry.getKey()).append(" : ").append(entry.getValue()).append(", ");
         }
-        sb.deleteCharAt(sb.length() - 1); // 마지막 띄어쓰기 제거
-        sb.deleteCharAt(sb.length() - 1); // 마지막 쉼표 제거
-        return sb.toString();
+        return sb.substring(0, sb.length() - 2);
     }
 }

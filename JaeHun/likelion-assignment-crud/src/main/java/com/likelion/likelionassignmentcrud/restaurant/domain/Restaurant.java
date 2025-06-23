@@ -29,7 +29,7 @@ public class Restaurant {
         this.address = address;
     }
 
-    public void update(String name, String location) {
+    public void update(String name, String location, String address) {
         this.name = name;
         this.location = location;
         this.address = address;
